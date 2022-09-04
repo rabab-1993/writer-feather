@@ -1,0 +1,16 @@
+.hero {
+  height: 70vh;
+  /* background: #fff; */
+  display: flex;
+  justify-content: space-between;
+}
+
+.hero > p {
+  width: 30vw;
+  text-align: center;
+  align-self: center;
+}
+
+.shape {
+  width: 30vw;
+}
