@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
-import shape from "../../img/blob.svg";
-import writer from "../../img/writer.png";
+
+import writer from "../../img/author.png";
 const Hero = () => {
   return (
       <div className="hero">
@@ -16,7 +16,6 @@ const Hero = () => {
         اتضح أن كلمات نص لوريم إيبسوم تأتي من الأقسام من كتاب "حول أقاصي الخير
         والشر" للمفكر والذي كتبه في عام 45 قبل الميلاد
       </p>
-      {/* <img src={shape} alt="shape" className='shape' /> */}
     </div>
   );
 };

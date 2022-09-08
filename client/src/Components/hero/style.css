@@ -1,16 +1,32 @@
 .hero {
   height: 70vh;
-  /* background: #fff; */
+  background: #fff;
   display: flex;
-  justify-content: space-between;
+  /* border: 7px dashed #006D77; */
+  /* justify-content: center; */
+  align-items: center;
 }
 
 .hero > p {
-  width: 30vw;
+  margin-right: 6rem;
+  width: 50vw;
   text-align: center;
   align-self: center;
+  /* font-size: large;
+  font-weight: bold; */
+  font: italic large bold;
+  color: #006D77;
+  /* background: rgb(220, 177, 177); */
 }
 
 .shape {
   width: 30vw;
+}
+
+.hero img {
+  width: 40vw;
+  background: #83C5BE;
+  /* height: 0vh; */
+  clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
+  /* border: 2px solid black; */
 }
