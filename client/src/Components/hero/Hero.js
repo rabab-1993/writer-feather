@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 
-import writer from "../../img/author.png";
+import writer from "../../assets/img/author.png";
 const Hero = () => {
   return (
       <div className="hero">

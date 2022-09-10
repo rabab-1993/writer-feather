@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Slider from "react-slick";
 import { Rate } from "antd";
 import { FaTimes } from "react-icons/fa";
-import Modal from "../../CustomeComponents/modal/Modal";
+import Modal from "../modal/Modal";
 import "./style.css";
 
 const TopRated = () => {
@@ -155,7 +155,7 @@ const TopRated = () => {
       </div>
       {/* Opining a Modal */}
       {modal ? (
-        <div>
+        <div className="modal-continer">
           <FaTimes className="close-bttn" onClick={closeModal} /> <Modal />
         </div>
       ) : (

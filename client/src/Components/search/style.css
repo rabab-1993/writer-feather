@@ -5,7 +5,7 @@
   /* align-items: center; */
   /* position: relative;
   right: 35%; */
-  margin: 0 0 0 auto;
+  margin: 0 auto;
 }
 
 .search .search-input {
@@ -24,6 +24,7 @@
 .search .ant-input::placeholder {
   direction: ltr;
 }
+
 .result {
   display: flex;
   align-items: center;
