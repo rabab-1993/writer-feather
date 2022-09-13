@@ -1,0 +1,43 @@
+.register-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-container form {
+  background: #ffddd2;
+  height: 30rem;
+  width: 45vw;
+  padding: 2rem;
+  margin: 0;
+  border-radius: 10px;
+  display: grid;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    font-weight: bold;
+}
+
+.register-container input,
+.register-container .ant-form-item-control span {
+  /* background: #000; */
+  border-radius: 5px;
+}
+.register-container button {
+  border-radius: 10px;
+  border-color: #83c5be;
+  color: #83c5be;
+  width: 8rem;
+  height: fit-content;
+  justify-self: center;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.register-container h4 {
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+.register-container a {
+  margin-right: 0.5rem;
+}

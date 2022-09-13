@@ -1,8 +1,10 @@
 .new-story-container {
-  background: #006d77;
+  background: #fff;
+  /* background: #006d77; */
   width: 50rem;
   height: 100vh;
   margin: auto;
+  padding-top: 4rem;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
@@ -11,7 +13,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.new-story-container h1,
+/* .new-story-container h1,
 .new-story-container .ant-form-item-label label {
   color: #fff;
-}
+} */

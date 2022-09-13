@@ -2,8 +2,8 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Register from './pages/account/Register'
-import Login from './pages/account/Login'
+import Register from './pages/register/Register'
+import Login from './pages/login/Login'
 import Nav from "./Components/nav/Nav";
 import Home from "./Components/home/Home";
 import Category from "./pages/categories/Category";
