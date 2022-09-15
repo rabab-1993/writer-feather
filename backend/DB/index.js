@@ -1,8 +1,8 @@
-const mongoose  = require("mongoose");
-const dotenv = require("dotenv");
-dotenv.config();
+import mongoose from "mongoose";
+import { config } from "dotenv";
+config();
 
-
+const { connect } = mongoose
 const DB = process.env.DB
 
 const options = {
@@ -10,7 +10,7 @@ const options = {
     useUnifiedTopology: true,
 }
 
-mongoose.connect(`${DB}`, options).then(
+connect(`${DB}`, options).then(
     () => {
       console.log("DB Ready To Use");
     },

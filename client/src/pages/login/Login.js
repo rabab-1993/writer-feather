@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, Form } from "antd";
 import { logIn } from "../../reducers/login";
@@ -9,9 +9,6 @@ import "./style.css";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const state = useSelector((state) => {
-    return state;
-  });
 
   const [log, setLogIn] = useState({
     // userName: "",
@@ -22,7 +19,7 @@ const Login = () => {
   const userLog = async () => {
     try {
       const result = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/user/login`,
+        `${process.env.REACT_APP_BASE_URL}/api/user/login`,
         log
       );
       const data = {
@@ -30,7 +27,7 @@ const Login = () => {
         user: result.data.result,
       };
       dispatch(logIn(data));
-      navigate("/posts", { replace: true });
+      navigate("/", { replace: true });
       // window.location.reload(true);
     } catch (error) {
       console.log(error);

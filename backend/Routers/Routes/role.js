@@ -1,14 +1,14 @@
-const express = require("express");
-const roleRouter = express.Router();
+import { Router } from "express";
+const roleRouter = Router();
 
-const { creatRole, allRole } = require('../Controllers/role');
-const authentication = require("../midleware/auth");
-const authorization = require("../midleware/outh");
-
-
-roleRouter.get("/",authentication,authorization, allRole)
-roleRouter.post("/create", authentication,authorization, creatRole)
+import { creatRole, allRole } from '../Controllers/role.js';
+import authentication from "../midleware/auth.js";
+import authorization from "../midleware/outh.js";
 
 
+roleRouter.get("/role",authentication,authorization, allRole)
+roleRouter.post("/role", authentication,authorization, creatRole)
 
-module.exports = roleRouter;
+
+
+export default roleRouter;

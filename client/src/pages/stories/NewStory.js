@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Button, Form, Input, Select, Upload } from "antd";
 import { BiUpload } from "react-icons/bi";
 
 import "./NewStory.css";
 
 const NewStory = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
+  const state = useSelector((state) => {
+    return state;
+  });
+  // console.log(state.signIn.token);
+  useEffect(() => {
+    if (!state.signIn.token) {
+      navigate("/login");
+    }
+  }, []);
+  const [data, setData] = useState({
+    // userName: "",
+    email: "",
+    password: "",
+  });
+  const { Option } = Select;
   const layout = {
     labelCol: {
       span: 8,
@@ -28,8 +47,25 @@ const NewStory = () => {
     "أكشن",
   ];
 
+  const newStory = async () => {
+    try {
+      const result = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/stories/`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${state.signIn.token}`,
+          },
+        }
+      );
+      console.log(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleChange = (value) => {
-    console.log(`selected ${value}`);
+    console.log(value);
   };
   const onFinish = (values) => {
     console.log(values);
@@ -65,16 +101,18 @@ const NewStory = () => {
               width: "100%",
             }}
             placeholder="Please select"
-            // initialValues={["a10", "c12"]}
-            onChange={handleChange}
+            value={categories}
+            onChange={(ev) => console.log(ev)}
           >
             {categories.map((category, i) => (
-              <Select.Option key={i}>{category}</Select.Option>
+              <Option value={category} key={i}>
+                {category}
+              </Option>
             ))}
           </Select>
         </Form.Item>
         <Form.Item
-          name="intro"
+          name="description"
           label="وصف"
           rules={[
             {

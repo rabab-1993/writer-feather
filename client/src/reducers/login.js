@@ -1,6 +1,6 @@
 const initialState = {
     user: null,
-    token: "",
+    token: null
   };
   
   const signIn = (state = initialState, action) => {

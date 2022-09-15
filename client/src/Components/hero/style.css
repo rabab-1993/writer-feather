@@ -12,8 +12,7 @@
   width: 50vw;
   text-align: center;
   align-self: center;
-  /* font-size: large;
-  font-weight: bold; */
+  /* font-size: large; */
   font: italic large bold;
   color: #006D77;
   /* background: rgb(220, 177, 177); */
@@ -25,7 +24,7 @@
 
 .hero img {
   width: 40vw;
-  background: #83C5BE;
+  background: #FFDDD2;
   /* height: 0vh; */
   clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%);
   /* border: 2px solid black; */

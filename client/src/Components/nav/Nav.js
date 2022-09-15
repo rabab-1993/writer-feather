@@ -1,12 +1,21 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "antd";
 import { BsPencilSquare } from "react-icons/bs";
+import { MdOutlineLogout } from "react-icons/md";
+import { logOut } from "../../reducers/login";
 import Search from "../search/Search";
-
 import "./style.css";
 
 const Nav = () => {
+  const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const state = useSelector((state) => {
+    return state;
+  });
+  const dispatch = useDispatch();
   const categories = [
     "رومانسي",
     "خيال",
@@ -20,72 +29,32 @@ const Nav = () => {
     "دراما",
     "أكشن",
   ];
+  useEffect(() => {
+    if (state.signIn.id) {
+      const userInfo = async () => {
+        try {
+          const result = await axios.get(
+            `${process.env.REACT_APP_BASE_URL}/api/user/profile?_id=${state.signIn.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${state.signIn.token}`,
+              },
+            }
+          );
+          setData(result.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      userInfo();
+    }
+    // eslint-disable-next-line
+  }, [state.signIn]);
 
-  // const items = [
-  //   {
-  //     label: "التصنيفات",
-  //     key: "SubMenu",
-  //     children: [
-  //       m(),
-
-  //       // {
-  //       //   label: (
-  //       //     <Link
-  //       //       to={`/Category/action`}
-  //       //       // state={{ Category: item._id }}
-  //       //     >
-  //       //       اكشن
-  //       //     </Link>
-  //       //   ),
-  //       //   key: "action",
-  //       // },
-  //       // {
-  //       //   label: "رومانسي",
-  //       //   key: "romance",
-  //       // },
-  //       // {
-  //       //   label: "خيال",
-  //       //   key: "fantasy",
-  //       // },
-  //       // {
-  //       //   label: "غموض",
-  //       //   key: "mystery",
-  //       // },
-  //       // {
-  //       //   label: "رعب",
-  //       //   key: "horror",
-  //       // },
-  //       // {
-  //       //   label: "مفامرة",
-  //       //   key: "adventure",
-  //       // },
-  //       // {
-  //       //   label: "خوارق",
-  //       //   key: "paranormal",
-  //       // },
-  //       // {
-  //       //   label: "إثارة",
-  //       //   key: "Thriller",
-  //       // },
-  //       // {
-  //       //   label: "مستذئب",
-  //       //   key: "werewolf",
-  //       // },
-  //       // {
-  //       //   label: "مصاص دماء",
-  //       //   key: "vampire",
-  //       // },
-  //       // {
-  //       //   label: "دراما",
-  //       //   key: "drama",
-  //       // },
-  //     ],
-  //   },
-  // ];
-  // const onClick = (e) => {
-  //   console.log("click ", e);
-  //   setCurrent(e.key);
-  // };
+  const signOut = () => {
+    navigate("/");
+    dispatch(logOut());
+  };
 
   return (
     <div className="nav">
@@ -99,31 +68,48 @@ const Nav = () => {
         <div className="dropdown-content">
           {categories.map((category, i) => {
             return (
-              <Link to={`/category/${category}`} state={{ Category: categories }} key={i}>
+              <Link
+                to={`/category/${category}`}
+                state={{ Category: categories }}
+                key={i}
+              >
                 {category}
               </Link>
             );
           })}
         </div>
       </ul>
-      {/* <Menu
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-        style={{ textAlign: "right" }}
-        items={items}
-        className="menu"
-      /> */}
-      <Link to="/mystories/new" style={{color: '#e29578'}}>
+      <Link to="/mystories/new" style={{ color: "#e29578" }}>
         اكتب قصة <BsPencilSquare />
       </Link>
       <Search />
-      <Button shape="round">
-        <Link to="/login">تسجيل الدخول</Link>
-      </Button>
-      <Button shape="round">
-        <Link to="/register">تسجيل جديد</Link>
-      </Button>
+      {state.signIn.token ? (
+        data.map((info) => (
+          <div key={info._id} className="user-info">
+            <h4>
+              مرحباً! <span style={{ color: "#006D77" }}>{info.userName}</span>
+            </h4>
+            <img src={info.avatar} alt="" className="avatar" />
+            <ul className="dropdown-profile">
+              <li>
+                <Link to="/profile">الحساب</Link>
+              </li>
+              <li onClick={signOut}>
+                تسجيل الخروج <MdOutlineLogout />
+              </li>
+            </ul>
+          </div>
+        ))
+      ) : (
+        <>
+          <Button shape="round">
+            <Link to="/login">تسجيل الدخول</Link>
+          </Button>
+          <Button shape="round">
+            <Link to="/register">تسجيل جديد</Link>
+          </Button>
+        </>
+      )}
     </div>
   );
 };

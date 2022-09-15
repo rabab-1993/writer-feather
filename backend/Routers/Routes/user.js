@@ -1,48 +1,33 @@
-const express = require("express");
-const {
+import { Router } from "express";
+import {
   register,
   logIn,
   allUser,
   deleteUser,
   undeleteUser,
-  activated,
+  emailActivate,
   forgetPass,
   updatePass,
   profile,
   updateProfile,
-} = require("../Controllers/user");
-const authentication = require("../midleware/auth");
-const authorization = require("../midleware/outh");
-const passport = require("passport");
-const { googlePass } = require("../../passport");
-const userRouter = express.Router();
+} from "../Controllers/user.js";
 
-userRouter.post("/register", register);
-userRouter.get("/activated/:token", activated);
-userRouter.post("/login", logIn);
-userRouter.put("/forget", forgetPass);
-userRouter.get("/reset-pass/:res-tok", updatePass);
-userRouter.get("/profile", authentication, profile);
-userRouter.put("/update", authentication, updateProfile);
+import authentication from "../midleware/auth.js";
+import authorization from "../midleware/outh.js";
+const userRouter = Router();
 
-// log with Google
-userRouter.get(
-  "/user/auth/google",
-  passport.authenticate("google", { scope: ["profile"] })
-);
+userRouter.post("/user", register);
+userRouter.get("/user/email-activate/:token", emailActivate);
+userRouter.post("/user/login", logIn);
+userRouter.put("/user/forget", forgetPass);
+userRouter.get("/user/reset-pass/:res-tok", updatePass);
+userRouter.get("/user/profile", authentication, profile);
+userRouter.put("/user/profile", authentication, updateProfile);
 
-userRouter.get(
-  "/user/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect("/post");
-  }
-);
 
 // just for admin
-userRouter.get("/users", authentication, authorization, allUser);
-userRouter.delete("/delete-user", authentication, authorization, deleteUser);
-userRouter.put("/undelete-user", authentication, authorization, undeleteUser);
+userRouter.get("/user", authentication, authorization, allUser);
+userRouter.delete("/user", authentication, authorization, deleteUser);
+userRouter.put("/user", authentication, authorization, undeleteUser);
 
-module.exports = userRouter;
+export default userRouter;

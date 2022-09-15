@@ -1,10 +1,10 @@
-const roleModel = require('../../DB/Model/role')
+import  roleModel  from '../../DB/Model/role.js';
 
 
 const authorization = async (req, res, next) => {
     try {
         const roleId = req.saveToken.role;
-        const result = await roleModel.findById(roleId);
+        const result = await roleModel(roleId);
         if(result.role == "admin") {
             next();
         } else {
@@ -17,4 +17,4 @@ const authorization = async (req, res, next) => {
 
 
 
-module.exports = authorization;
+export default authorization;

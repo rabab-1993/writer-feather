@@ -8,6 +8,7 @@ import Nav from "./Components/nav/Nav";
 import Home from "./Components/home/Home";
 import Category from "./pages/categories/Category";
 import NewStory from "./pages/stories/NewStory";
+import Profile from "./pages/account/Profile";
 
 import 'antd/dist/antd.css'
 
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/category/:category" element={<Category />} />
         <Route exact path="/mystories/new" element={<NewStory />} />
+        <Route exact path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );

@@ -5,15 +5,15 @@
   height: 100vh;
   margin: auto;
   padding-top: 4rem;
-  display: flex;
+  display: grid;
   flex-direction: column;
-  /* justify-content: center; */
-  align-items: center;
+  justify-content: center;
+  /* align-items: center; */
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-/* .new-story-container h1,
+.new-story-container h1,
 .new-story-container .ant-form-item-label label {
-  color: #fff;
-} */
+  color: #006D77;
+}
