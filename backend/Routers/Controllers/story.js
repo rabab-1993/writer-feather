@@ -1,9 +1,7 @@
-const multer = require("multer");
-const upload = multer();
-const postModel = require("../../db/model/post");
-const userModel = require("../../db/model/user");
+import storyModel from "../../DB/Model/story.js";
+import userModel from "../../DB/Model/user.js";
 
-const cloudinary = require("cloudinary").v2;
+import { v2 as cloudinary } from "cloudinary";
 // cloudinary configuration
 cloudinary.config({
   cloud_name: "dtj6j4tpa",
@@ -12,57 +10,34 @@ cloudinary.config({
 });
 
 // creat new post
-const newPost = async (req, res) => {
+const newStory = async (req, res) => {
   try {
-    const { user, desc, imags } = req.body;
-    let imgs = [];
+    const { author, description, cover, title, category } = req.body;
 
-    for (const image of imags) {
-      const cloud = await cloudinary.uploader.upload(image, {
-        folder: "social-img",
-      });
-
-      imgs.push(cloud.secure_url);
-    }
-    const post = new postModel({
-      desc,
-      img: imgs,
-      user,
+    const cloud = await cloudinary.uploader.upload(cover, {
+      folder: "story-cover",
+    });
+    const story = new storyModel({
+      author,
+      description,
+      cover: cloud.secure_url,
+      title,
+      category,
     });
 
-    post.save().then((result) => {
+    story.save().then((result) => {
       res.status(201).json(result);
     });
   } catch (error) {
     res.status(400).json(error);
   }
-
-  // console.log(imags);
-  //  const cloud = await cloudinary.uploader.upload(imags, {
-  //     folder: "social-img",
-  //   }, function(error, result) {console.log(result, error)})
-
-  // const post = new postModel({
-  //   desc,
-  //   img: imags,
-  //   user,
-  // });
-
-  // post
-  //   .save()
-  //   .then((result) => {
-  //     res.status(201).json(result);
-  //   })
-  //   .catch((err) => {
-  //     res.status(400).json(err);
-  //   });
 };
 // get all post
 
-const allPost = (req, res) => {
+const allStories = (req, res) => {
   postModel
     .find({ isDeleted: false })
-    .populate("likes comments user")
+    .populate("likes comments author")
     .then((result) => {
       res.status(200).json(result);
     })
@@ -72,7 +47,7 @@ const allPost = (req, res) => {
 };
 
 // get user is post
-const postedBy = async (req, res) => {
+const storyBy = async (req, res) => {
   const { userId, postId } = req.query;
 
   await postModel
@@ -105,7 +80,7 @@ const deletePost = async (req, res) => {
   const { _id, adminId } = req.query;
   const tokenId = req.saveToken.id;
   const postBy = await postModel.findById(_id);
-  const admin = await userModel.findById(adminId);
+  const admin = await findById(adminId);
 
   if (tokenId == postBy.user || admin.role == "61a82b332b8f8814ee629667") {
     await postModel
@@ -119,4 +94,4 @@ const deletePost = async (req, res) => {
   }
 };
 
-module.exports = { newPost, allPost, updatePost, deletePost, postedBy };
+export { newStory, allStories, updatePost, deletePost, storyBy };

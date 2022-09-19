@@ -9,7 +9,10 @@ const storySchema = new Schema({
   status: {type:String, default: "غير مكتمل"},
   author: { type: Schema.Types.ObjectId, ref: "User" },
   rate: { type: Schema.Types.ObjectId, ref: "Rate" },
-  review: { type: Schema.Types.ObjectId, ref: "Review" }
+  review: { type: Schema.Types.ObjectId, ref: "Review" },
+  chapters: [{type: Schema.Types.ObjectId, ref: "Chapter"}],
+  createdAt: {type: Date, default: Date.now},
+  updated: {type: Date}
 });
 
 export default model("Story", storySchema);

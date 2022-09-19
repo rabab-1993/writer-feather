@@ -7,6 +7,7 @@ import Login from './pages/login/Login'
 import Nav from "./Components/nav/Nav";
 import Home from "./Components/home/Home";
 import Category from "./pages/categories/Category";
+import MyStories from "./pages/stories/MyStories";
 import NewStory from "./pages/stories/NewStory";
 import Profile from "./pages/account/Profile";
 
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/category/:category" element={<Category />} />
+        <Route exact path="/mystories" element={<MyStories />} />
         <Route exact path="/mystories/new" element={<NewStory />} />
         <Route exact path="/profile" element={<Profile />} />
       </Routes>

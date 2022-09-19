@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Input, Select, Upload } from "antd";
+import { Button, Form, Input, Select, Image } from "antd";
 import { BiUpload } from "react-icons/bi";
 
 import "./NewStory.css";
@@ -10,6 +10,7 @@ import "./NewStory.css";
 const NewStory = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const [value, setvalue] = useState("");
   const state = useSelector((state) => {
     return state;
   });
@@ -19,11 +20,15 @@ const NewStory = () => {
       navigate("/login");
     }
   }, []);
-  const [data, setData] = useState({
-    // userName: "",
-    email: "",
-    password: "",
-  });
+  // const [data, setData] = useState({
+  //   author: "",
+  //   description: "",
+  //   cover: "",
+  //   title: "",
+  //   category: [],
+  // });
+  const [data, setData] = useState({});
+  const [coverPreview, setCoverPreview] = useState("");
   const { Option } = Select;
   const layout = {
     labelCol: {
@@ -38,7 +43,7 @@ const NewStory = () => {
     "خيال",
     "غموض",
     "رعب",
-    "مفامرة",
+    "مغامرة",
     "خارق للطبيعة",
     "إثارة",
     "مستذئب",
@@ -47,10 +52,24 @@ const NewStory = () => {
     "أكشن",
   ];
 
+  //  for convert images to Base64
+  const getBase64 = async (file) => {
+    await new Promise((resolve, reject) => {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        resolve(setData({ ...data, cover: reader.result }));
+        setCoverPreview(reader.result);
+      };
+
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const newStory = async () => {
     try {
       const result = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/stories/`,
+        `${process.env.REACT_APP_BASE_URL}/api/story`,
         data,
         {
           headers: {
@@ -59,22 +78,111 @@ const NewStory = () => {
         }
       );
       console.log(result.data);
+      setCoverPreview(" ");
+      setData(" ");
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleChange = (value) => {
-    console.log(value);
-  };
-  const onFinish = (values) => {
-    console.log(values);
+  // const handleChange = (values) => {
+  //   // let selectedValue = [];
+  //   // let value = Array.from(
+  //   //   values.target.selectedOptions,
+  //   //   (option) => option.value
+  //   // );
+  //   // selectedValue.push(values);
+  //   console.log(values.target);
+
+  //   setData({
+  //     ...data,
+  //     author: state.signIn.id,
+  //     description: values.description,
+  //     cover: coverPreview,
+  //     title: values.title,
+  //     category: values.category,
+  //   });
+  // };
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+
+    setData((values) => ({
+      ...values,
+      author: state.signIn.id,
+      // title: value,
+      // cover: coverPreview,
+      // description: value,
+      [name]: value,
+    }));
   };
 
+  const onFinish = (values) => {
+    values.preventDefault();
+    newStory();
+  };
+
+  console.log(data);
   return (
     <div className="new-story-container">
       <h1>إنشاء قصة جديدة:</h1>
-      <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+      <form onSubmit={onFinish} onChange={handleChange}>
+        <label>
+          العنوان:
+          <input
+            type="text"
+            name="title"
+            value={data.title}
+            // onChange={(ev) => setData({ ...data, title: ev.target.value })}
+            required
+          />
+        </label>
+
+        <label className="category">
+          التصنيف:
+          <Select
+            mode="multiple"
+            style={{
+              width: "50%",
+            }}
+            placeholder="الرجاء إختيار التصنيف"
+            // value={categories}
+            onChange={(ev) => setData({ ...data, category: ev })}
+          >
+            {categories.map((category, i) => (
+              <Option value={category} key={i}>
+                {category}
+              </Option>
+            ))}
+          </Select>
+        </label>
+
+        <label className="description">
+          وصف:
+          <textarea type="text" name="description" value={data.description} />
+        </label>
+        <label htmlFor="">
+          غلاف القصة:
+          <input
+            type="file"
+            // value={coverPreview}
+            onChange={(e) => getBase64(e.target.files[0])}
+          />
+          {coverPreview ? (
+            <Image src={coverPreview} alt="" className="cover" />
+          ) : (
+            <></>
+          )}
+        </label>
+        <button type="submit">إنشاء</button>
+      </form>
+      {/* <Form
+        {...layout}
+        form={form}
+        name="control-hooks"
+        onFinish={onFinish}
+        onValuesChange={handleChange}
+      >
         <Form.Item
           name="title"
           label="العنوان"
@@ -102,7 +210,7 @@ const NewStory = () => {
             }}
             placeholder="Please select"
             value={categories}
-            onChange={(ev) => console.log(ev)}
+            // onChange={(ev) => console.log(ev)}
           >
             {categories.map((category, i) => (
               <Option value={category} key={i}>
@@ -124,19 +232,20 @@ const NewStory = () => {
           <Input.TextArea />
         </Form.Item>
         <Form.Item
-          name="upload"
+          name="cover"
           label="غلاف القصة"
-          valuePropName="fileList"
-          // getValueFromEvent={normFile}
+          valuePropName="cover"
+          getValueFromEvent={(e) => getBase64(e.target.files[0])}
         >
-          <Upload name="cover" action="/upload.do" listType="picture">
-            <Button>
-              <BiUpload />
-            </Button>
-          </Upload>
+          <input type="file" name="cover" id="" />
         </Form.Item>
+        {coverPreview ? (
+          <Image src={coverPreview} alt="" className="cover" />
+        ) : (
+          <></>
+        )}
         <Button htmlType="submit">إنشاء</Button>
-      </Form>
+      </Form> */}
     </div>
   );
 };

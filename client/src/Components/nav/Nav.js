@@ -21,7 +21,7 @@ const Nav = () => {
     "خيال",
     "غموض",
     "رعب",
-    "مفامرة",
+    "مغامرة",
     "خارق للطبيعة",
     "إثارة",
     "مستذئب",
@@ -91,6 +91,9 @@ const Nav = () => {
             </h4>
             <img src={info.avatar} alt="" className="avatar" />
             <ul className="dropdown-profile">
+              <li>
+                <Link to="/mystories">قصصي</Link>
+              </li>
               <li>
                 <Link to="/profile">الحساب</Link>
               </li>

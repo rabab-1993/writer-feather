@@ -28,10 +28,9 @@ app.use("/api", rolRouter);
 // user router
 import userRouter from "./Routers/Routes/user.js";
 app.use("/api", userRouter);
-
-// // post router
-// const postRouter = require("./Routers/Routes/post");
-// app.use("/api", postRouter);
+// story router
+import storyRouter from "./Routers/Routes/story.js";
+app.use("/api", storyRouter);
 // // comment router
 // const commentRouter = require("./Routers/Routes/comment");
 // app.use("/api", commentRouter);
