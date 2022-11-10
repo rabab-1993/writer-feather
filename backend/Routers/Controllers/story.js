@@ -9,7 +9,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-// creat new post
+// creat new story
 const newStory = async (req, res) => {
   try {
     const { author, description, cover, title, category } = req.body;
@@ -32,12 +32,13 @@ const newStory = async (req, res) => {
     res.status(400).json(error);
   }
 };
-// get all post
 
+
+// get all Stories
 const allStories = (req, res) => {
-  postModel
+  storyModel
     .find({ isDeleted: false })
-    .populate("likes comments author")
+    .populate("review chapters rate author")
     .then((result) => {
       res.status(200).json(result);
     })
@@ -46,18 +47,27 @@ const allStories = (req, res) => {
     });
 };
 
-// get user is post
+// search stories by tittle or author or by category
 const storyBy = async (req, res) => {
-  const { userId, postId } = req.query;
+  const { authorId, storyId, category, tittle } = req.query;
 
-  await postModel
-    .find({ $or: [{ _id: postId }, { user: userId }], isDeleted: false })
-    .populate("likes user")
+  await storyModel
+    .find({
+      $or: [
+        { _id: storyId },
+        { author: authorId },
+        { category: category },
+        { tittle: tittle },
+      ],
+      isDeleted: false,
+    })
+    .populate("author")
     .then((result) => {
       res.status(200).json(result);
     })
     .catch((err) => {
       res.status(400).json(err);
+      console.log(err);
     });
 };
 

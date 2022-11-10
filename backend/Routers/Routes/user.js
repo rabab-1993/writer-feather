@@ -12,8 +12,8 @@ import {
   updateProfile,
 } from "../Controllers/user.js";
 
-import authentication from "../midleware/auth.js";
-import authorization from "../midleware/outh.js";
+import authentication from "../Midleware/auth.js";
+import authorization from "../Midleware/outh.js";
 const userRouter = Router();
 
 userRouter.post("/user", register);

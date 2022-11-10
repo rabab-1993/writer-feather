@@ -31,9 +31,9 @@ app.use("/api", userRouter);
 // story router
 import storyRouter from "./Routers/Routes/story.js";
 app.use("/api", storyRouter);
-// // comment router
-// const commentRouter = require("./Routers/Routes/comment");
-// app.use("/api", commentRouter);
+// chapter router
+import chapterRouter from "./Routers/Routes/chapter.js";
+app.use("/api", chapterRouter);
 // // comment router
 // const likeRouter = require("./Routers/Routes/like");
 // app.use("/api", likeRouter);

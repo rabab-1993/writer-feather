@@ -1,5 +1,5 @@
 import { Router } from "express";
-import authentication from '../midleware/auth.js';
+import authentication from '../Midleware/auth.js';
 import { newStory, allStories, updatePost, deletePost, storyBy } from '../Controllers/story.js';
 
 const storyRouter = Router();
