@@ -4,12 +4,15 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, Form } from "antd";
 import { logIn } from "../../reducers/login";
+import { Error } from "../../Components/alert/Alert";
+
 import "./style.css";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [log, setLogIn] = useState({
     // userName: "",
     email: "",
@@ -30,12 +33,15 @@ const Login = () => {
       navigate("/", { replace: true });
       // window.location.reload(true);
     } catch (error) {
-      console.log(error);
+      console.log(error.response);
+      setError(true);
+      setErrorMsg(error.response.data);
     }
   };
 
   return (
     <div className="login-container">
+      {error ? <Error message={errorMsg} /> : <></>}
       <h1>تسجيل الدخول</h1>
       <Form
         className="login-form"

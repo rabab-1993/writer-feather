@@ -1,13 +1,13 @@
-import React from 'react'
+import React from "react";
 import "./style.css";
 
-const Modal = () => {
+const Modal = ({ text }) => {
   return (
-    <div className='modal'>
-        Modal
-
+    <div className="modal">
+      Modal
+      {text}
     </div>
-  )
-}
+  );
+};
 
-export default Modal
+export default Modal;

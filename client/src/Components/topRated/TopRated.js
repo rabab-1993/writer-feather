@@ -4,6 +4,7 @@ import { Rate } from "antd";
 import { FaTimes } from "react-icons/fa";
 import Modal from "../modal/Modal";
 import "./style.css";
+import book from "../../assets/img/book.png";
 
 const TopRated = () => {
   const [modal, setModal] = useState(false);
@@ -125,22 +126,15 @@ const TopRated = () => {
     ],
   };
 
-  const openModal = () => {
-    setModal(true);
-  };
-
-  const closeModal = () => {
-    setModal(false);
-  };
-
   return (
     <>
       <div className="top-rated">
+        <img src={book} alt="" className="model-book" />
         <h1>Top Rated</h1>
         <Slider {...settings}>
           {data.map((item) => (
             <div key={item.id} className="book">
-              <img src={item.cover} alt="" onClick={openModal} />
+              <img src={item.cover} alt="" onClick={() => setModal(true)} />
               <h2>{item.title}</h2>
               <h5>{item.author} :بريشة</h5>
               <Rate
@@ -156,7 +150,8 @@ const TopRated = () => {
       {/* Opining a Modal */}
       {modal ? (
         <div className="modal-continer">
-          <FaTimes className="close-bttn" onClick={closeModal} /> <Modal />
+          <FaTimes className="close-bttn" onClick={() => setModal(false)} />{" "}
+          <Modal />
         </div>
       ) : (
         <></>

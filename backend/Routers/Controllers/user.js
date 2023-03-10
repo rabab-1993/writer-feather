@@ -159,7 +159,6 @@ const logIn = (req, res) => {
 
   userModel
     .findOne({ $or: [{ email }, { userName }] })
-
     .then(async (result) => {
       if (result) {
         const savePass = await compare(password, result.password);
@@ -174,7 +173,7 @@ const logIn = (req, res) => {
           res.status(400).json("invalid email or password");
         }
       } else {
-        return res.status(404).json("not found");
+        return res.status(404).json("User Not found");
       }
     })
     .catch((err) => {

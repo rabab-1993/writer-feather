@@ -1,0 +1,36 @@
+.myStories-container {
+  height: 100vh;
+  display: flex;
+  /* justify-content: space-evenly;
+  flex-wrap: wrap; */
+  margin: 2rem;
+  background: #ffddd2;
+}
+
+.stories {
+  margin: 2rem;
+  width: 100vw;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  /* background: #a9a3a3; */
+}
+
+.story {
+  padding-top: 2rem;
+  /* background: #a9a3a3; */
+  height: fit-content;
+  color: #006d77;
+}
+
+.story img {
+  width: 12rem;
+  height: 15rem;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.story h3,
+h5 {
+  padding-right: 1rem;
+}

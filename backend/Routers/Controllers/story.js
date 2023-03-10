@@ -33,7 +33,6 @@ const newStory = async (req, res) => {
   }
 };
 
-
 // get all Stories
 const allStories = (req, res) => {
   storyModel
@@ -50,17 +49,32 @@ const allStories = (req, res) => {
 // search stories by tittle or author or by category
 const storyBy = async (req, res) => {
   const { authorId, storyId, category, tittle } = req.query;
-
+  //   const re ={ $regex: tittle, $options: "i"}
+  // console.log( authorId, storyId, category, tittle);
   await storyModel
     .find({
       $or: [
         { _id: storyId },
         { author: authorId },
         { category: category },
-        { tittle: tittle },
       ],
       isDeleted: false,
     })
+    .populate("author")
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+      console.log(err);
+    });
+};
+const oneStory = async (req, res) => {
+  const { tittle } = req.query;
+  // storyModel.createIndex({ title: "text" });
+  await storyModel
+    // .find({ $text: { $search: tittle }, isDeleted: false })
+    .findOne({ title: { $regex: tittle, $options: "i" }, isDeleted: false })
     .populate("author")
     .then((result) => {
       res.status(200).json(result);
@@ -85,23 +99,31 @@ const updatePost = async (req, res) => {
     });
 };
 
-// soft delete post function
-const deletePost = async (req, res) => {
+// soft delete story function
+const deleteStory = async (req, res) => {
   const { _id, adminId } = req.query;
-  const tokenId = req.saveToken.id;
-  const postBy = await postModel.findById(_id);
-  const admin = await findById(adminId);
+  // const tokenId = req.saveToken.id;
+  // const postBy = await postModel.findById(_id);
+  // const admin = await findById(adminId);
+  await storyModel
+    .findByIdAndUpdate({ _id }, { $set: { isDeleted: true } }, { new: true })
+    .then(() => {
+      res.json({ massege: "deleted successfully" });
+    })
+    .catch((err) => {
+      res.status(400).json(err);
+    });
 
-  if (tokenId == postBy.user || admin.role == "61a82b332b8f8814ee629667") {
-    await postModel
-      .findByIdAndUpdate({ _id }, { $set: { isDeleted: true } }, { new: true })
-      .then(() => {
-        res.json({ massege: "deleted successfully" });
-      })
-      .catch((err) => {
-        res.status(403).json({ massege: "forbidden" });
-      });
-  }
+  // if (tokenId == postBy.user || admin.role == "61a82b332b8f8814ee629667") {
+  //   await storyModel
+  //     .findByIdAndUpdate({ _id }, { $set: { isDeleted: true } }, { new: true })
+  //     .then(() => {
+  //       res.json({ massege: "deleted successfully" });
+  //     })
+  //     .catch((err) => {
+  //       res.status(403).json({ massege: "forbidden" });
+  //     });
+  // }
 };
 
-export { newStory, allStories, updatePost, deletePost, storyBy };
+export { newStory, allStories, oneStory, updatePost, deleteStory, storyBy };

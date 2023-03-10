@@ -2,42 +2,26 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Input, Select, Image } from "antd";
-import { BiUpload } from "react-icons/bi";
+import { Select, Image } from "antd";
+// import { BiUpload } from "react-icons/bi";
+import { Success, Error, Warning } from "../../Components/alert/Alert";
 
 import "./NewStory.css";
 
 const NewStory = () => {
   const navigate = useNavigate();
-  const [form] = Form.useForm();
-  const [value, setvalue] = useState("");
   const state = useSelector((state) => {
     return state;
   });
-  // console.log(state.signIn.token);
   useEffect(() => {
     if (!state.signIn.token) {
       navigate("/login");
     }
   }, []);
-  // const [data, setData] = useState({
-  //   author: "",
-  //   description: "",
-  //   cover: "",
-  //   title: "",
-  //   category: [],
-  // });
+
   const [data, setData] = useState({});
   const [coverPreview, setCoverPreview] = useState("");
   const { Option } = Select;
-  const layout = {
-    labelCol: {
-      span: 8,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
   const categories = [
     "رومانسي",
     "خيال",
@@ -80,29 +64,26 @@ const NewStory = () => {
       console.log(result.data);
       setCoverPreview(" ");
       setData(" ");
+       <Success
+        message={result.statusText}
+        // description="fgfgfgfhgfhgfhfffgfgfhfhghghfghfghghgmnbfgryrttgvbnhji8uiutrfsdbnn"
+      />
     } catch (error) {
-      console.log(error);
+      console.log(error.response.status);
+      {
+        error.response.status === 400 ? (
+          <Error
+            message={error.response.statusText}
+            // description="fgfgfgfhgfhgfhfffgfgfhfhghghfghfghghgmnbfgryrttgvbnhji8uiutrfsdbnn"
+            state={true}
+          />
+        ) : (
+          <></>
+        );
+      }
     }
   };
 
-  // const handleChange = (values) => {
-  //   // let selectedValue = [];
-  //   // let value = Array.from(
-  //   //   values.target.selectedOptions,
-  //   //   (option) => option.value
-  //   // );
-  //   // selectedValue.push(values);
-  //   console.log(values.target);
-
-  //   setData({
-  //     ...data,
-  //     author: state.signIn.id,
-  //     description: values.description,
-  //     cover: coverPreview,
-  //     title: values.title,
-  //     category: values.category,
-  //   });
-  // };
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -122,10 +103,19 @@ const NewStory = () => {
     newStory();
   };
 
-  console.log(data);
   return (
     <div className="new-story-container">
-      <h1>إنشاء قصة جديدة:</h1>
+      {/* <Warning
+        message="hfhjhfkghkghjkjgfdfsdf"
+        description="fgfgfgfhgfhgfhfffgfgfhfhghghfghfghghgmnbfgryrttgvbnhji8uiutrfsdbnn"
+      >
+        <button>hghthfgh</button>
+      </Warning> */}
+      {/* <Success
+        message="hfhjhfkghkghjkjgfdfsdf"
+        description="fgfgfgfhgfhgfhfffgfgfhfhghghfghfghghgmnbfgryrttgvbnhji8uiutrfsdbnn"
+      /> */}
+      <h1 className="h1">إنشاء قصة جديدة:</h1>
       <form onSubmit={onFinish} onChange={handleChange}>
         <label>
           العنوان:

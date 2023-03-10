@@ -59,17 +59,22 @@
   color: #e29578;
 }
 
-
 .modal-continer {
-    background: rgba(96, 95, 95, 0.502);
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    overflow: auto;
+  background: rgba(96, 95, 95, 0.502);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  overflow: auto;
 }
 
+.model-book {
+  height: 16rem;
+  width: 13rem;
+  transform: rotateY(180deg);
+  /* transform: scaleX(-1); */
+}
 /* @media only screen and (max-width: 600px) {} */

@@ -1,0 +1,117 @@
+.success {
+  width: 40vw;
+  height: fit-content(20em);
+  padding: 2rem 1rem;
+  background: #e5f4e3;
+  color: black;
+  word-wrap: break-word;
+  border-radius: 5px;
+  border: 1px solid #63cb55;
+  position: fixed;
+  z-index: 1;
+  left: 28%;
+  top: 10%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  overflow: auto;
+}
+
+.success .icon {
+  /* font-size: 1em; */
+  font-weight: bold;
+  height: fit-content;
+  width: 2rem;
+  border-radius: 50%;
+  /* display: inline-block; */
+  padding: 0.4rem 0.6rem;
+  margin: 1rem;
+  background: rgb(62, 196, 39);
+  color: #fff;
+}
+
+/* .success span::after{
+  content:'\0021'
+} */
+
+.error {
+  width: 44vw;
+  height: fit-content(20em);
+  padding: 2rem 1rem;
+  background: #f1d5d5;
+  color: black;
+  word-wrap: break-word;
+  border-radius: 5px;
+  border: 1px solid #c54747;
+  position: fixed;
+  z-index: 1;
+  left: 28%;
+  top: 10%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  overflow: auto;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+.error p {
+  margin-top: 2rem;
+}
+
+.error .icon {
+  /* font-size: 1em; */
+  font-weight: bold;
+  height: fit-content;
+  width: 2rem;
+  border-radius: 50%;
+  /* display: inline-block; */
+  padding: 0.4rem 0.6rem;
+  margin: 1rem;
+  background: rgb(196, 39, 39);
+  color: #fff;
+}
+
+.error .close {
+  position: fixed;
+  top: 10%;
+  left: 30%;
+  font-size: 1em;
+  width: 1rem;
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+}
+
+.warning {
+  width: 44vw;
+  height: fit-content(20em);
+  padding: 2rem 1rem;
+  background: #fadcc8;
+  color: black;
+  word-wrap: break-word;
+  border-radius: 5px;
+  border: 1px solid #c57547;
+  position: fixed;
+  z-index: 1;
+  left: 28%;
+  top: 10%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  overflow: auto;
+}
+
+.warning .icon {
+  font-size: 1.5em;
+  font-weight: bold;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  display: inline-block;
+  /* padding: 0 0.8rem; */
+  text-align: center;
+  margin: 1rem;
+  background: rgb(248, 121, 30);
+  color: #fff;
+}
+
+.warning .icon::after {
+  content: "\0021";
+}

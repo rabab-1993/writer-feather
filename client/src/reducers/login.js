@@ -13,7 +13,7 @@ const initialState = {
         return { user, token };
       case "LOGOUT":
         localStorage.clear();
-        return payload;
+        return state;
       default:
         let getToken = localStorage.getItem("token");
         let getId = localStorage.getItem("id");

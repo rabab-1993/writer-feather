@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { Button, Input, Form, message } from "antd";
 import "./style.css";
-import Modal from "../../Components/modal/Modal";
 const Register = () => {
   const [register, setRegister] = useState({
     userName: "",

@@ -49,7 +49,7 @@ const Nav = () => {
       userInfo();
     }
     // eslint-disable-next-line
-  }, [state.signIn]);
+  }, []);
 
   const signOut = () => {
     navigate("/");
@@ -89,18 +89,20 @@ const Nav = () => {
             <h4>
               مرحباً! <span style={{ color: "#006D77" }}>{info.userName}</span>
             </h4>
-            <img src={info.avatar} alt="" className="avatar" />
-            <ul className="dropdown-profile">
-              <li>
-                <Link to="/mystories">قصصي</Link>
-              </li>
-              <li>
-                <Link to="/profile">الحساب</Link>
-              </li>
-              <li onClick={signOut}>
-                تسجيل الخروج <MdOutlineLogout />
-              </li>
-            </ul>
+            <div className="dropdown">
+              <img src={info.avatar} alt="" className="avatar" />
+              <ul className="dropdown-profile">
+                <li>
+                  <Link to="/mystories">قصصي</Link>
+                </li>
+                <li>
+                  <Link to="/profile">الحساب</Link>
+                </li>
+                <li onClick={signOut}>
+                  تسجيل الخروج <MdOutlineLogout />
+                </li>
+              </ul>
+            </div>
           </div>
         ))
       ) : (
