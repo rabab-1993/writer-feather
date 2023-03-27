@@ -29,7 +29,7 @@ function App() {
         <Route exact path="/mystories/new" element={<NewStory />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/story/:title" element={<OneStory />} />
-        <Route exact path="/chapter/:part" element={<Chapter />} />
+        <Route exact path="/:title/chapter/:part" element={<Chapter />} />
       </Routes>
       <Footer />
     </div>

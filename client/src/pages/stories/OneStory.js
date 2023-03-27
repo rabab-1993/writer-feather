@@ -10,6 +10,7 @@ import AddChapter from "../chapter/AddChapter";
 const OneStory = () => {
   let { title } = useParams();
   const [data, setData] = useState([]);
+  const [chaptersData, setChaptersData] = useState([]);
   const [categories, setCategories] = useState([]);
   const [deleteStoryHandle, setDeleteStoryHandle] = useState(false);
   const [showChapterForm, setShowChapterForm] = useState(false);
@@ -21,13 +22,7 @@ const OneStory = () => {
     const findStory = async () => {
       try {
         const result = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/story/oneStory?tittle=${title}`,
-
-          {
-            headers: {
-              Authorization: `Bearer ${state.signIn.token}`,
-            },
-          }
+          `${process.env.REACT_APP_BASE_URL}/api/story/oneStory?tittle=${title}`
         );
         setData(result.data);
         setCategories(result.data.category);
@@ -36,7 +31,21 @@ const OneStory = () => {
       }
     };
     findStory();
-  }, [title]);
+    if (data._id) {
+      const chapters = async () => {
+        try {
+          const result = await axios.get(
+            `${process.env.REACT_APP_BASE_URL}/api/chapter?storyId=${data._id}`
+          );
+          setChaptersData(result.data);
+          console.log(result.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      chapters();
+    }
+  }, [title, state.signIn.token, data._id]);
 
   const deleteStory = async (id) => {
     try {
@@ -93,20 +102,36 @@ const OneStory = () => {
           <GrChapterAdd />
           <h4 style={{ fontSize: "0.8em" }}>فصل جديد</h4>
         </span>
-        <h3>الفصول:</h3>
+        <h3>الفصول ({chaptersData.length}) :</h3>
+        {chaptersData.map((item) => (
+          <Link
+            to={`/${title}/chapter/${item.part}`}
+            key={item}
+            className="chapter"
+          >
+            {item.part}
+          </Link>
+        ))}
       </div>
       {showChapterForm && (
-        <AddChapter>
+        <AddChapter storyId={data._id}>
           <input
             type="button"
             value="إلغاء"
             onClick={() => setShowChapterForm(false)}
           />
-          <input type="button" value="نشر" />
+          <input
+            type="submit"
+            value="نشر"
+            onClick={() => {
+              setShowChapterForm(false);
+              // findStory();
+            }}
+          />
         </AddChapter>
       )}
       {deleteStoryHandle && (
-        <Warning message="هل انت متأكد من حذف القصة">
+        <Warning message="هل انت متأكد من حذف القصة؟">
           <input
             type="button"
             value="حذف"
