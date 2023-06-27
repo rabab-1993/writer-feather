@@ -34,7 +34,8 @@ const Nav = () => {
       const userInfo = async () => {
         try {
           const result = await axios.get(
-            `${process.env.REACT_APP_BASE_URL}/api/user/profile?_id=${state.signIn.id}`,
+            `${process.env.REACT_APP_BASE_URL}/api/users/profile/${state.signIn.id}`,
+            // `${process.env.REACT_APP_BASE_URL}/api/user/profile?_id=${state.signIn.id}`,
             {
               headers: {
                 Authorization: `Bearer ${state.signIn.token}`,

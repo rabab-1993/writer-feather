@@ -68,3 +68,14 @@ b {
 .link a:visited {
   color: #d62246;
 }
+
+
+.chapter {
+  border: 1px solid black;
+  /* width: 6rem;
+  height: 6rem; */
+  margin: 4em 0;
+  padding: 0.3em;
+  text-decoration: none;
+  /* background: #000; */
+}

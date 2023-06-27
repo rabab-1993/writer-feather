@@ -15,20 +15,23 @@ const Login = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [log, setLogIn] = useState({
     // userName: "",
-    email: "",
+    // email: "",
+    username:'',
     password: "",
   });
 
   const userLog = async () => {
     try {
       const result = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/api/user/login`,
+        `${process.env.REACT_APP_BASE_URL}/api/login/`,
+        // `${process.env.REACT_APP_BASE_URL}/api/user/login`,
         log
       );
       const data = {
-        token: result.data.token,
-        user: result.data.result,
+        token: result.data.access,
+        // user: result.data,
       };
+      console.log(result.data);
       dispatch(logIn(data));
       navigate("/", { replace: true });
       // window.location.reload(true);
@@ -59,6 +62,21 @@ const Login = () => {
       >
         {/* Email Field */}
         <Form.Item
+          label="اسم المستخدم"
+          name="username"
+          rules={[
+            {
+              required: true,
+              message: "Please input your userName!",
+            },
+          ]}
+        >
+          <Input
+            value={log.username}
+            onChange={(ev) => setLogIn({ ...log, username: ev.target.value })}
+          />
+        </Form.Item>
+        {/* <Form.Item
           label="البريد الإلكتروني"
           name="email"
           rules={[
@@ -72,7 +90,7 @@ const Login = () => {
             value={log.email}
             onChange={(ev) => setLogIn({ ...log, email: ev.target.value })}
           />
-        </Form.Item>
+        </Form.Item> */}
         {/* Password Field */}
         <Form.Item
           label="كلمة المرور"
